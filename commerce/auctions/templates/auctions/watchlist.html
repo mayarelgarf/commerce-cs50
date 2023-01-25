@@ -1,0 +1,19 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+<h2>watch list</h2>
+{%for listing in user_watchlist %}
+<div class="card-group">
+  
+    <div class="card"><a href= "{% url 'listing_page' id=listing.id %}">
+      <img class="card-img-top" src="{{listing_pic}}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">item title: {{listing.title}}</h5>
+        <p class="card-text">description: {{listing.description}}</p>
+        <p class="card-text"><small class="text-muted">price : {{listing.price}}</small></p>
+      </a></div>
+    
+{%endfor%}
+        
+{%endblock%}

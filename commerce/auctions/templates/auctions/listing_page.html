@@ -1,0 +1,41 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+{% if user.is_authenticated %}
+{% if owner %}
+<form action="{% url 'close_auctions' id=listing.id %}" method="POST">
+    <input type="hidden" name = 'close_auction'>
+    <button type="submit"> close auction</button>
+</form> 
+{%endif%}
+{% if watchlist is True %}
+    <form action = "{% url 'remove_watchlist' id=listing.id %}" method="POST">{% csrf_token %}
+        {% csrf_token %}
+         <button type="submit"> remove from watchlist</button>
+    </form>
+{% else %}
+     <form action = "{% url 'add_watchlist' id=listing.id %}" method="POST">{% csrf_token %}
+        {% csrf_token %}
+         <button type="submit" > add to watchlist</button>
+     </form>
+    
+{% endif %}
+{% endif %}
+{{message}}
+
+<h2>title: {{listing.title}}</h2>
+<p>description: {{listing.description}}</p>
+<p>starting bid : {{listing.price}}</p>
+<img src="{{listing.listing_pic}}" alt="{{listing.listingtitle}}"> 
+<p>category: {{ls_category}}</p>
+<p> owner: {{listing.owner}}</p>
+{% if user.is_authenticated %}
+    <form action="{% url 'add_bid' id=listing.id %}" method="POST">
+    {%csrf_token%}
+    <label>enter a bid</label>
+    <input type="number" name = 'bid'>
+    <button type="submit"> submit bid</button>
+    </form>
+    {%endif%}
+    
+{%endblock%}
